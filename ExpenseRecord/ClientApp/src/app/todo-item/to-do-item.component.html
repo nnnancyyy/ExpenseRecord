@@ -1,0 +1,15 @@
+  <div class="list">
+    <ng-container>
+      <div class="item">
+        <input (click)="$event.stopPropagation()" (ngModelChange)="toggleItemDone(item)" type="checkbox" [ngModel]="item.done">
+        <input class="item-desc" type="text" [(ngModel)]="item.description">
+      </div>
+    </ng-container>
+  </div>
+  <div class="save">
+    <button (click)="delete()" class="button-red">Delete</button>
+    <button (click)="save()" class="button-blue" style="float: right;">Save</button>
+  </div>
+  <div class="back">
+    <button (click)="navToList()" class="button-default">Back</button>
+  </div>
