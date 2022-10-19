@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToDoItem } from '../models/ToDoItem';
-import { ToDoService } from '../services/to-do.service';
+import { ToDoServiceMock } from '../services/to-do.service.mock';
 
 @Component({
   selector: 'app-to-do-list',
@@ -17,7 +17,7 @@ export class ToDoListComponent implements OnInit, OnDestroy {
   public displayList: Array<ToDoItem> = new Array<ToDoItem>;
   private fullList: ToDoItem[] = [];
 
-  constructor(private todoService: ToDoService, private router: Router, private route: ActivatedRoute) {
+  constructor(private todoService: ToDoServiceMock, private router: Router, private route: ActivatedRoute) {
 
   }
 
@@ -75,7 +75,7 @@ export class ToDoListComponent implements OnInit, OnDestroy {
   toggleItemDone(item: ToDoItem): void {
     const oldValue = item.done;
     item.done = !item.done;
-    this.todoService.updateOne(item.id, item).subscribe();
+    this.todoService.updateOne(item.id, item);//.subscribe();
   }
 
   async navToItem(item: ToDoItem): Promise<boolean> {
@@ -91,11 +91,12 @@ export class ToDoListComponent implements OnInit, OnDestroy {
   }
 
   private loadData(): void {
-    this.todoService.getAll().subscribe(res=>{
-      console.log(res)
-      this.fullList = res;
-      this.displayList = [...this.fullList];
-    });
+    this.todoService.getAll()
+    //.subscribe(res=>{
+    //  console.log(res)
+    //  this.fullList = res;
+    //  this.displayList = [...this.fullList];
+    //});
   }
 }
 
@@ -103,3 +104,5 @@ enum SortDir {
   Asc = 1,
   Desc = 2
 }
+
+

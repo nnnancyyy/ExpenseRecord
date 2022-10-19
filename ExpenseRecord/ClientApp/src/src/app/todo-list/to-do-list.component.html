@@ -1,0 +1,36 @@
+<div class="title">
+  <h1 style="font-family:Tahoma, Geneva, sans-serif;color: gray;">ToDoList</h1>
+</div>
+<div class="search">
+  <input (ngModelChange)="onSearchTextChange($event)" [ngModel]="searchString" placeholder="Search ...">
+  <button (click)="reload()" class="button-default">Reload</button>
+</div>
+<div class="list-actions">
+  <button (click)="toggleSortByDesc()" class="button-default">
+    <span>Sort by Description</span>
+    <ng-container *ngIf="sortByDescDir">
+      <span *ngIf="sortByDescDir === SortDir.Asc"><strong>&#8593;</strong></span>
+      <span *ngIf="sortByDescDir === SortDir.Desc"><strong>&#8595;</strong></span>
+    </ng-container>
+  </button>
+  <button (click)="toggleSortByDate()" class="button-default">
+    <span>Sort by Created Time</span>
+    <ng-container *ngIf="sortByDateDir">
+      <span *ngIf="sortByDateDir === SortDir.Asc"><strong>&#8593;</strong></span>
+      <span *ngIf="sortByDateDir === SortDir.Desc"><strong>&#8595;</strong></span>
+    </ng-container>
+  </button>
+  <button (click)="toggleHideDone()" class="button-default">{{hideDone ? 'Show' : 'Hide'}} Done</button>
+</div>
+<div class="list">
+  <ng-container *ngFor="let item of displayList ">
+    <div (click)="navToItem(item)" class="item">
+      <input (click)="$event.stopPropagation()" (ngModelChange)="toggleItemDone(item)" [ngModel]="item.done"
+        type="checkbox">
+      <span class="item-desc">{{item.description}}</span>
+    </div>
+  </ng-container>
+</div>
+<div class="create-item">
+  <button (click)="navToCreateNew()" class="button-blue">Create Item</button>
+</div>
