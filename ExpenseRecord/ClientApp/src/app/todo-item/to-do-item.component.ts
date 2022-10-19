@@ -18,16 +18,18 @@ export class ToDoItemComponent implements OnInit {
       id: 'new',
       createTime: new Date().toISOString(),
       description: '',
-      done: false
+      type:'',
+      amount: Number()
     };
     this.form = this.fb.group({
       description: this.fb.control('', [Validators.required]),
-      done: this.fb.control(''),
-      favorite: this.fb.control('')
+      amount: this.fb.control('', [Validators.required]),
+      type: this.fb.control('', [Validators.required])
     });
     this.form.valueChanges.subscribe(() => {
       this.item.description = this.form.get('description')?.value ?? '';
-      this.item.done = this.form.get('done')?.value ?? false;
+      this.item.type = this.form.get('type')?.value ?? '';
+      this.item.amount = this.form.get('amount')?.value ?? '';
     });
   }
 
@@ -73,12 +75,6 @@ export class ToDoItemComponent implements OnInit {
     }
   }
 
-  toggleItemDone(item: ToDoItem): void {
-    const oldValue = item.done;
-    item.done = !item.done;
-    console.log(item)
-    this.toDoService.updateOne(item.id, item).subscribe();
-  }
 
   async navToList(): Promise<boolean> {
     return this.router.navigate(['items'], {
@@ -93,7 +89,8 @@ export class ToDoItemComponent implements OnInit {
   private patchFormWithItem(item: ToDoItem): void {
     this.form.patchValue({
       description: item.description,
-      done: item.done
+      amount: item.amount,
+      type: item.type
     });
   }
 }

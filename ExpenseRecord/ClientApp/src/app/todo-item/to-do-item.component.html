@@ -1,9 +1,10 @@
   <div class="list">
     <ng-container>
-      <div class="item">
-        <input (click)="$event.stopPropagation()" (ngModelChange)="toggleItemDone(item)" type="checkbox" [ngModel]="item.done">
-        <input class="item-desc" type="text" [(ngModel)]="item.description">
-      </div>
+      <form>
+        Description: <input type="text" name="firstname"><br>
+        Type: <input type="text" name="lastname"><br>
+        Amount: <input type="text" name="firstname"><br>
+      </form>
     </ng-container>
   </div>
   <div class="save">

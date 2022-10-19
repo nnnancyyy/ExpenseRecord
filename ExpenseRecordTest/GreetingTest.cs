@@ -1,24 +1,42 @@
-using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using WebApplication1.Controllers;
+using WebApplication1.service;
 
-namespace ExpenseRecordTest;
-
-public class GreetingTest
+namespace ToDoListTestProject1
 {
-    [Fact]
-    public async Task Should_Return_All_Pets_When_Get_All_Pets()
+    public class ToDoListTest
     {
-        // given
-        var application = new WebApplicationFactory<Program>()
-            .WithWebHostBuilder(_ => { });
-        var client = application.CreateClient();
-        const string name = "Bob";
+        [Fact]
+        public async Task Test_Exception_Handling_When_Delete()
+        {
+            //arrange
+            var Service = new Mock();
+            var controller = new HomeController(Service);
 
-        // when
-        var response = await client.GetAsync("Greeting?name=" + name);
+            //act
+            var actionResult = await controller.DeleteItemAsync("abc");
 
-        // then
-        response.EnsureSuccessStatusCode();
-        var responseBody = await response.Content.ReadAsStringAsync();
-        Assert.Equal("Hello, Bob", responseBody);
+            //assert
+            Assert.Equal(typeof(NotFoundObjectResult), actionResult.GetType());
+            var notFoundResult = actionResult as NotFoundObjectResult;
+            Assert.Equal("ToDoItem not found", notFoundResult.Value.ToString());
+        }
+
+        [Fact]
+        public async Task Test_Happy_Pass_When_Delete()
+        {
+            //arrange
+            var toDoItemService = new Mock2();
+            var controller = new HomeController(toDoItemService);
+
+            //act
+            var actionResult = await controller.DeleteItemAsync("abc");
+
+            //assert
+            Assert.Equal(typeof(NoContentResult), actionResult.GetType());
+            var noContentResult = actionResult as NoContentResult;
+            Assert.Equal(204, noContentResult.StatusCode);
+        }
     }
 }

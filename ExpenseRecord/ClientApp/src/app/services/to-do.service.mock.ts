@@ -11,20 +11,23 @@ export class ToDoServiceMock {
     {
       'id': '1',
       'description': 'test1',
+      'type':'buy',
       'createTime': '2022-01-01',
-      'done': true
+      'amount': 1
     },
     {
       'id': '2',
       'description': 'test2',
+      'type':'buy',
       'createTime': '2022-01-02',
-      'done': true
+      'amount': 2
     },
     {
       'id': '3',
       'description': 'test3',
+      'type':'buy',
       'createTime': '2022-01-03',
-      'done': true
+      'amount': 3
     }
   ];
   getAll(): ToDoItem[] {
@@ -50,7 +53,8 @@ export class ToDoServiceMock {
   updateOne(id: string, body: ToDoItem): ToDoItem {
     const todo: ToDoItem | undefined = this.todos.find(t => t.id === id);
     if (todo) {
-      todo.done = body.done;
+      todo.type = body.type;
+      todo.amount = body.amount;
       todo.description = body.description;
       return todo;
     }
@@ -58,8 +62,8 @@ export class ToDoServiceMock {
       return {
         'id': '',
         'description': '',
-        'createTime': '',
-        'done': true
+        'amount':'',
+        'type':''
       };
     }
   }

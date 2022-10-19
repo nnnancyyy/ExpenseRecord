@@ -67,17 +67,6 @@ export class ToDoListComponent implements OnInit, OnDestroy {
     this.displayList = [...this.displayList.sort((i1, i2) => (new Date(i1.createTime).getTime() - new Date(i2.createTime).getTime()) * (this.sortByDateDir === SortDir.Asc ? 1 : -1))];
   }
 
-  toggleHideDone(): void {
-    this.hideDone = !this.hideDone;
-    this.displayList = this.hideDone ? this.fullList.filter(i => !i.done) : this.fullList.slice();
-  }
-
-  toggleItemDone(item: ToDoItem): void {
-    const oldValue = item.done;
-    item.done = !item.done;
-    this.todoService.updateOne(item.id, item).subscribe();
-  }
-
   async navToItem(item: ToDoItem): Promise<boolean> {
     return this.router.navigate(['item', item.id], {
       relativeTo: this.route.parent

@@ -20,14 +20,11 @@
       <span *ngIf="sortByDateDir === SortDir.Desc"><strong>&#8595;</strong></span>
     </ng-container>
   </button>
-  <button (click)="toggleHideDone()" class="button-default">{{hideDone ? 'Show' : 'Hide'}} Done</button>
 </div>
 <div class="list">
   <ng-container *ngFor="let item of displayList ">
     <div (click)="navToItem(item)" class="item">
-      <input (click)="$event.stopPropagation()" (ngModelChange)="toggleItemDone(item)" [ngModel]="item.done"
-        type="checkbox">
-      <span class="item-desc">{{item.description}}</span>
+      <span class="item-desc">{{item.description,item.type,item.amount}}</span>
     </div>
   </ng-container>
 </div>

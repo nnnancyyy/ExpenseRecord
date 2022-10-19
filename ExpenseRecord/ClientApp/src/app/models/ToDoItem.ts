@@ -1,6 +1,9 @@
+import * as internal from "stream";
+
 export interface ToDoItem {
   id: string;
   description: string;
   createTime: string;
-  done: boolean;
+  amount: number;
+  type: string;
 }
